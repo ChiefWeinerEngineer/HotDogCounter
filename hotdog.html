@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hot Dog Calculator</title>
+	<style>
+		body {
+			background-image: url('back.jpg');
+			color: rgb(177, 12, 20);
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			left: 20px;
+      max-height: fit-content;
+		}
+		h1 {
+			font-size: 36px;
+			margin-top: 50px;
+			margin-left: 41%;
+		}
+		#calculator {
+			padding: 10px;
+			margin-top: 20px;
+			margin-left: 15%;
+			margin-right: 200px;
+		}
+		input[type="number"] {
+			width: 50px;
+		}
+		table {
+			float: left;
+			margin-right: 20px;
+			margin-top: 2%;
+			border-collapse: collapse;
+		}
+		table img {
+			display: block;
+			margin-bottom: 10px;
+		}
+		.cart {
+			position: fixed;
+			bottom: -100px;
+			margin-left: 80px;
+			width: 10%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+    #images {
+      margin-left: 170px;
+    }
+
+ 
+	</style>
+</head>
+<body>
+	<style>
+		body {
+		  background-image: url('back.jpg');
+		}
+	</style>
+		<header>
+			<img src="cart.png" alt="Cart" class="cart">
+			<table>
+				<tr>
+					<td><a href="index.html"><img src="home.gif" alt="Home" width="100%" height="100%"></a> </td>
+				</tr>
+				<tr>
+					<td><a href="aboutUs.html"><img src="aboutUs.gif" alt="About Us" width="100%" height="100%"></a></td>
+				</tr>
+				<tr>
+					<td><a href="hotdog.html"><img src="hotDogCounter.gif" alt="Hot Dog Calculator" width="100%" height="100%"></a></td>
+				</tr>
+			</table>
+	<h1>Hot Dog Counter</h1>
+	
+	<div id="calculator">
+		<label for="guests">Number of Guests:</label>
+		<input type="number" id="guests" value=1 min="1" required><br>
+    <label for="dogsPer">Hot Dogs per Guest:</label>
+		<input type="number" id="dogsPer" value=2 min="1" required><br>
+		<label for="dogs">Hot Dogs per Package:</label>
+		<input type="number" id="dogs" value=10 min="1" required><br>
+		<label for="buns">Buns per Package:</label>
+		<input type="number" id="buns" value=8 min="1" required><br>
+		<button onclick="calculate()">Calculate</button>
+		<p id="result"></p>
+	</div>
+  <div id="images">
+		<p id="hotdog-images"></p>
+		<p id="bun-images"></p>
+	</div>
+	<script>
+    function calculate() {
+      var guests = parseInt(document.getElementById("guests").value);
+      var dogs = parseInt(document.getElementById("dogs").value);
+      var dogsPer = parseInt(document.getElementById("dogsPer").value);
+      var buns = parseInt(document.getElementById("buns").value);
+      
+      if (isNaN(guests) || isNaN(dogs) || isNaN(buns) || isNaN(dogsPer) || guests <= 0 || dogsPer <= 0 || dogs <= 0 || buns <= 0) {
+        alert("Please enter valid positive integer values for guests, dogs, and buns.");
+        return;
+      }
+
+      var totalDogs = Math.ceil(guests * dogsPer / dogs);
+      var totalBuns = Math.ceil(guests * dogsPer / buns);
+
+      
+      // remove existing images
+      document.getElementById("hotdog-images").innerHTML = "";
+      document.getElementById("bun-images").innerHTML = "";
+      
+      if(totalDogs < 10000 && totalBuns < 10000){
+        var result = "You need " + totalDogs + " packages of hot dogs and " + totalBuns + " packages of buns.";
+        document.getElementById("result").innerHTML = result;
+
+        // hot dog package image
+        var hotDogImg = document.createElement("img");
+        hotDogImg.src = "PackageOfDogs.png";
+        hotDogImg.alt = "hot dog package";
+        hotDogImg.width = "100";
+        hotDogImg.height = "100";
+        for (var i = 0; i < totalDogs; i++) {
+          document.getElementById("hotdog-images").appendChild(hotDogImg.cloneNode());
+        }
+        
+        // bun package image
+        var bunImg = document.createElement("img");
+        bunImg.src = "packageOfBuns.png";
+        bunImg.alt = "bun package";
+        bunImg.width = "100";
+        bunImg.height = "100";
+        for (var i = 0; i < totalBuns; i++) {
+          document.getElementById("bun-images").appendChild(bunImg.cloneNode());
+        }
+    } else {
+      var result = "You need " + totalDogs + " packages of hot dogs and " + totalBuns + " packages of buns. To prevent crashing, we cannot generate images for this many items.";
+      document.getElementById("result").innerHTML = result;
+    }
+  }
+  </script>
+  
+</body>
+</html>
